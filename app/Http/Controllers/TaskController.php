@@ -22,7 +22,7 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        DB::table('tasks')->insert([
+        Task::create([
             'task' => $request->task,
             'user' => $request->user,
         ]);
@@ -32,25 +32,25 @@ class TaskController extends Controller
 
     public function show($id)
     {
-        $task = DB::table('tasks')->where('id', $id)->first();
-        ddd($task);
+        $task = Task::find($id);
+        return $task;
     }
 
     public function update(Request $request, $id)
     {
-        DB::table('tasks')->where('id', $id)->update([
+        $task = Task::find($id);
+        $task->update([
             'task'  =>  $request->task,
             'user'  =>  $request->user,
         ]);
 
-        return 'success';
+        return $task;
     }
 
     public function destroy($id)
     {
-        DB::table('tasks')
-            ->where('id', $id)
-            ->delete();
+        $task = Task::find($id);
+        $task->delete();
 
         return 'success';
     }
